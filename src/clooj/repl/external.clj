@@ -18,8 +18,8 @@
   "Locate the clojure jar being used by clooj (last resort)."
   []
   (let [class-loader (.getClassLoader clojure.lang.RT)]
-    (when-let [url (.findResource class-loader "clojure/lang/RT.class")]
-      (-> url .getFile URL. .getFile URLDecoder/decode (.split "!/") first))))
+    (when-let [url (.getResource (.getClassLoader clojure.lang.RT) "clojure/lang/RT.class")]
+      (-> url .getFile URL. .getFile (URLDecoder/decode "UTF-8") (.split "!/") first))))
 
 (defn jar-contains-class?
   "Does the jar contain a particular class file? Specify the
